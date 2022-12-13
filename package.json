@@ -1,5 +1,5 @@
 {
-    "name": "fast-company",
+    "name": "5",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -7,12 +7,11 @@
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
         "bootstrap": "^5.1.0",
-        "bootstrap-icons": "^1.5.0",
         "eslint-plugin-prettier": "^3.4.1",
         "lodash": "^4.17.15",
         "prop-types": "^15.7.2",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "react-scripts": "4.0.3",
         "web-vitals": "^1.0.1"
     },
@@ -51,5 +50,7 @@
         "eslint-plugin-promise": "^5.1.0",
         "eslint-plugin-react": "^7.25.1",
         "eslint-plugin-react-hooks": "^4.2.0"
-    }
+    },
+    "keywords": [],
+    "description": ""
 }
