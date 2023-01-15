@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import api from "../api";
 import QualitiesList from "./qualitiesList";
-import { useHistory, useParams } from "react-router-dom";
-const UserPage = () => {
-    const { userId } = useParams();
+import { useHistory } from "react-router-dom";
+
+const UserPage = ({ userId }) => {
     const history = useHistory();
     const [user, setUser] = useState();
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data));
     });
     const handleClick = () => {
-        history.push("/pageUser");
+        history.push("/users");
     };
     if (user) {
         return (
@@ -25,12 +25,12 @@ const UserPage = () => {
             </div>
         );
     } else {
-        return <h1>Грузим Юзеркарту...</h1>;
+        return <h1>Loading</h1>;
     }
 };
 
 UserPage.propTypes = {
-    userId: PropTypes.string
+    userId: PropTypes.string.isRequired
 };
 
 export default UserPage;

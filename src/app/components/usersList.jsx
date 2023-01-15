@@ -7,10 +7,12 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
-const Users = () => {
+const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
+    const [searchUser, setSearchUser] = useState("");
+
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
 
@@ -40,7 +42,12 @@ const Users = () => {
     }, [selectedProf]);
 
     const handleProfessionSelect = (item) => {
+        if (searchUser !== "") setSearchUser("");
         setSelectedProf(item);
+    };
+    const manualUserSearch = ({ target }) => {
+        setSelectedProf(undefined);
+        setSearchUser(target.value);
     };
 
     const handlePageChange = (pageIndex) => {
@@ -51,7 +58,9 @@ const Users = () => {
     };
 
     if (users) {
-        const filteredUsers = selectedProf
+        const filteredUsers = searchUser
+            ? users.filter((user) => user.name.indexOf(searchUser) !== -1)
+            : selectedProf
             ? users.filter(
                   (user) =>
                       JSON.stringify(user.profession) ===
@@ -60,7 +69,11 @@ const Users = () => {
             : users;
 
         const count = filteredUsers.length;
-        const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
+        const sortedUsers = _.orderBy(
+            filteredUsers,
+            [sortBy.path],
+            [sortBy.order]
+        );
         const usersCrop = paginate(sortedUsers, currentPage, pageSize);
         const clearFilter = () => {
             setSelectedProf();
@@ -86,6 +99,13 @@ const Users = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+                    <input
+                        type="text"
+                        name="searchUser"
+                        placeholder="Search..."
+                        onChange={manualUserSearch}
+                        value={searchUser}
+                    />
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
@@ -107,10 +127,10 @@ const Users = () => {
             </div>
         );
     }
-    return " ждем Юзеров...";
+    return "loading...";
 };
-Users.propTypes = {
+UsersList.propTypes = {
     users: PropTypes.array
 };
 
-export default Users;
+export default UsersList;
